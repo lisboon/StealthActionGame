@@ -82,7 +82,6 @@ void ASACharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 void ASACharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-
 	if (UCharacterMovementComponent* Movement = GetCharacterMovement())
 	{
 		Movement->MaxWalkSpeed = WalkSpeed;
@@ -137,11 +136,15 @@ void ASACharacter::StopRun()
 void ASACharacter::StartCrouch()
 {
 	Crouch();
+	CurrentStance = EMovementStance::Crouching;
+	UpdateMovementSpeed();
 }
 
 void ASACharacter::StopCrouch()
 {
 	UnCrouch();
+	CurrentStance = EMovementStance::Standing;
+	UpdateMovementSpeed();
 }
 
 // === Logic Jump In Development ===
@@ -158,8 +161,16 @@ void ASACharacter::StopJump()
 void ASACharacter::UpdateMovementSpeed()
 {
 	UCharacterMovementComponent* Movement = GetCharacterMovement();
-	
 	if (!Movement) return;
 
-	Movement->MaxWalkSpeed = bIsRunning ? RunSpeed : WalkSpeed;
+	const bool bCrouched = IsCrouched();
+
+	if (bCrouched)
+	{
+		Movement->MaxWalkSpeed = CrouchSpeed;           
+	}
+	else
+	{
+		Movement->MaxWalkSpeed = bIsRunning ? RunSpeed : WalkSpeed;
+	}
 }

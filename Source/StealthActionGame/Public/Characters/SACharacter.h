@@ -12,6 +12,13 @@ class UInputMappingContext;
 class UCameraComponent;
 class USpringArmComponent;
 
+UENUM(BlueprintType)
+enum class EMovementStance : uint8
+{
+	Standing	UMETA(DisplayName = "Standing"),
+	Crouching	UMETA(DisplayName = "Crouching")
+};
+
 UCLASS()
 class STEALTHACTIONGAME_API ASACharacter : public ACharacter
 {
@@ -64,8 +71,17 @@ protected:
 	
 	// === Movement State ===
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Movement|State")
+	EMovementStance CurrentStance = EMovementStance::Standing;
+	
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Movement|State")
 	bool bIsRunning = false;
 	
+	UFUNCTION(BlueprintPure, Category = "Movement")
+	bool IsCrouched() const { return CurrentStance == EMovementStance::Crouching; }
+	
+	void UpdateMovementSpeed();
+	
+	private:
 	// === Input Handlers ===
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
@@ -78,7 +94,4 @@ protected:
 	
 	void StartJump();
 	void StopJump();
-	
-	// Atualiza velocidade maxWalkSpeed conforme estado atual
-	void UpdateMovementSpeed();
 };
