@@ -118,11 +118,13 @@ void ASACharacter::Look(const FInputActionValue& Value)
 	AddControllerPitchInput(LookInput.Y);
 }
 
-// === Logic Run In Development ===
 void ASACharacter::StartRun()
 {
-	bIsRunning = true;
-	UpdateMovementSpeed();
+    if (CurrentStance == EMovementStance::Crouching)
+        return;
+
+    bIsRunning = true;
+    UpdateMovementSpeed();
 }
 
 void ASACharacter::StopRun()
@@ -131,7 +133,6 @@ void ASACharacter::StopRun()
 	UpdateMovementSpeed();
 }
 
-// === Logic Crouch In Development ===
 void ASACharacter::StartCrouch()
 {
 	Crouch();
@@ -144,17 +145,19 @@ void ASACharacter::StopCrouch()
 
 void ASACharacter::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
 {
-	Super::OnStartCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
-	CurrentStance = EMovementStance::Crouching;
+    Super::OnStartCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
+    CurrentStance = EMovementStance::Crouching;
+    bIsRunning = false;
+    UpdateMovementSpeed();
 }
 
 void ASACharacter::OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
 {
 	Super::OnEndCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
 	CurrentStance = EMovementStance::Standing;
+	UpdateMovementSpeed();
 }
 
-// === Logic Jump In Development ===
 void ASACharacter::StartJump()
 {
 	Jump();
