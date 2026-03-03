@@ -44,7 +44,6 @@ void ASACharacter::BeginPlay()
 			}
 		}
 	}
-	UpdateMovementSpeed();
 }
 
 void ASACharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -136,15 +135,23 @@ void ASACharacter::StopRun()
 void ASACharacter::StartCrouch()
 {
 	Crouch();
-	CurrentStance = EMovementStance::Crouching;
-	UpdateMovementSpeed();
 }
 
 void ASACharacter::StopCrouch()
 {
 	UnCrouch();
+}
+
+void ASACharacter::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
+{
+	Super::OnStartCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
+	CurrentStance = EMovementStance::Crouching;
+}
+
+void ASACharacter::OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
+{
+	Super::OnEndCrouch(HalfHeightAdjust, ScaledHalfHeightAdjust);
 	CurrentStance = EMovementStance::Standing;
-	UpdateMovementSpeed();
 }
 
 // === Logic Jump In Development ===
@@ -160,16 +167,7 @@ void ASACharacter::StopJump()
 
 void ASACharacter::UpdateMovementSpeed()
 {
-	UCharacterMovementComponent* Movement = GetCharacterMovement();
-	if (!Movement) return;
-
-	const bool bCrouched = IsCrouched();
-
-	if (bCrouched)
-	{
-		Movement->MaxWalkSpeed = CrouchSpeed;           
-	}
-	else
+	if (UCharacterMovementComponent* Movement = GetCharacterMovement())
 	{
 		Movement->MaxWalkSpeed = bIsRunning ? RunSpeed : WalkSpeed;
 	}

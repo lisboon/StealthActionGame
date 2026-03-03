@@ -33,6 +33,9 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
+	virtual void OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
+	virtual void OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust) override;
+
 	// === Camera Components ===
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
@@ -76,12 +79,9 @@ protected:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Movement|State")
 	bool bIsRunning = false;
 	
-	UFUNCTION(BlueprintPure, Category = "Movement")
-	bool IsCrouched() const { return CurrentStance == EMovementStance::Crouching; }
-	
 	void UpdateMovementSpeed();
 	
-	private:
+private:
 	// === Input Handlers ===
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
