@@ -51,7 +51,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AI|Behavior")
 	TObjectPtr<UBehaviorTree> BehaviorTreeAsset;
 
-	// === Perception Tuning ===
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AI|Perception|Sight")
 	float SightRadius = 1500.f;
 

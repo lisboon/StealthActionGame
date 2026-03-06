@@ -12,7 +12,6 @@ class STEALTHACTIONGAME_API USACharacterMovementComponent : public UCharacterMov
 	GENERATED_BODY()
 
 public:
-	// === Speed Config ===
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement|Speed",
 		meta = (ClampMin = "100.0", ClampMax = "1200.0"))
 	float WalkSpeed = 300.f;
@@ -25,10 +24,8 @@ public:
 		meta = (ClampMin = "50.0", ClampMax = "400.0"))
 	float CrouchSpeed = 150.f;
 
-	// === Sprint Intent ===
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Movement|State")
 	bool bWantsToRun = false;
 
-	// === Core Override ===
 	virtual float GetMaxSpeed() const override;
 };

@@ -14,7 +14,6 @@ ASACharacter::ASACharacter(const FObjectInitializer& ObjectInitializer)
 {
 	SAMovementComponent = Cast<USACharacterMovementComponent>(GetCharacterMovement());
 
-	// === Camera ===
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArmComponent->SetupAttachment(RootComponent);
 	SpringArmComponent->TargetArmLength = 300.f;
@@ -25,7 +24,6 @@ ASACharacter::ASACharacter(const FObjectInitializer& ObjectInitializer)
 
 	CoverComponent = CreateDefaultSubobject<USACoverComponent>(TEXT("CoverComponent"));
 
-	// === Movement ===
 	bUseControllerRotationYaw = false;
 
 	if (SAMovementComponent)

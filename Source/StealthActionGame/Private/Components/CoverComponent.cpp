@@ -25,7 +25,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Cover")
 	void ToggleCover();
 
-	// === State Queries ===
 	UFUNCTION(BlueprintPure, Category = "Cover")
 	bool IsInCover() const { return bIsInCover; }
 
@@ -55,7 +54,6 @@ protected:
 		meta = (ClampMin = "10.0", ClampMax = "100.0"))
 	float DetectionSweepRadius = 30.f;
 
-	// === Runtime State ===
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Cover|State")
 	bool bIsInCover = false;
 

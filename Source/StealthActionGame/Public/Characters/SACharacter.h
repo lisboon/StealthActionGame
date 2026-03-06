@@ -29,7 +29,6 @@ class STEALTHACTIONGAME_API ASACharacter : public ACharacter
 public:
 	ASACharacter(const FObjectInitializer& ObjectInitializer);
 
-	// === Public State Queries ===
 	UFUNCTION(BlueprintPure, Category = "Movement|State")
 	bool IsSprinting() const;
 
@@ -53,7 +52,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Cover")
 	TObjectPtr<USACoverComponent> CoverComponent;
 
-	// === Input Assets ===
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputMappingContext> InputMappingContext;
 
@@ -75,7 +73,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> CoverAction;
 
-	// === Movement State ===
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Movement|State")
 	EMovementStance CurrentStance = EMovementStance::Standing;
 
