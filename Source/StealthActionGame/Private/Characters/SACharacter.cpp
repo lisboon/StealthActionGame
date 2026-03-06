@@ -23,6 +23,8 @@ ASACharacter::ASACharacter(const FObjectInitializer& ObjectInitializer)
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
+	CoverComponent = CreateDefaultSubobject<USACoverComponent>(TEXT("CoverComponent"));
+
 	// === Movement ===
 	bUseControllerRotationYaw = false;
 
@@ -150,7 +152,7 @@ bool ASACharacter::IsSprinting() const
 
 void ASACharacter::Move(const FInputActionValue& Value)
 {
-	const FVector2D InputVector = Value.Get<FVector2D>();
+	FVector2D InputVector = Value.Get<FVector2D>();
 
 	if (!Controller || InputVector.IsNearlyZero())
 		return;
